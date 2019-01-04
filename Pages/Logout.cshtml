@@ -1,0 +1,13 @@
+﻿@page
+@model LogoutModel
+@{
+}
+<script>
+    deleteCookie('userAuth');
+    deleteCookie('username');
+    deleteCookie('isAuthenticated');
+    deleteCookie('claims');
+    localStorage.securityObject = null;
+    location.href = "/login";
+    $('#welcomeMenu').hide();
+</script>

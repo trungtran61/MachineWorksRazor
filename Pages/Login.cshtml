@@ -1,0 +1,110 @@
+﻿@page
+@model LoginModel
+
+@{
+    Layout = "_LayoutEmpty";
+}
+
+    <div class="panel panel-primary" style="position: absolute;top:20%;left:40%">
+        <div class="row justify-content-center align-items-center">
+            <div class="card" style="width: 38rem;margin-top: 5em">
+                <div class="card-header bg-primary text-white">
+                    <h5>Login</h5>
+                </div>
+                <div class="card-body ">
+                    <div class="col-xs-12">
+                        <div class="panel panel-primary">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label for="userName">User Name</label>
+                                    <div class="input-group">
+                                        <input id="userName" name="userName" class="form-control" required autofocus="autofocus" value="TienPhan" />
+                                        <!--input asp-for="credentials.userName" class="form-control" required autofocus="autofocus" type="password" value="TienPhan" /-->
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <div class="input-group">
+                                        <input id="password" name="password" class="form-control" required type="password" value="Password" />
+                                        <!--input asp-for="credentials.password" class="form-control" required type="password" value="Password" /-->
+                                        <span class="input-group-addon">
+                                            <i class="glyphicon glyphicon-lock"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-footer">
+                                <button class="btn btn-primary" id="btnLogin">
+                                    Login
+                                </button>
+                                <!--input type="submit" class="btn btn-primary" /-->
+                                <div class="row mt-3">
+                                    <div class="alert alert-danger" id="message" style="display:none">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+
+    var securityObject = {
+        userName: '',
+        bearerToken: '',
+        firstName: '',
+        email: '',
+        isAuthenticated: false,
+        permissions: [],
+        claims: [{
+            claimType: '',
+            claimValue: ''
+        }]
+    };
+
+    $('#btnLogin').click(function () {
+        ValidateUser();
+    });
+
+
+    function ValidateUser() {
+        var url = webAPIurl + "/ValidateUser";
+        var userAuthRequest = {};
+        userAuthRequest.userName = $('#userName').val();
+        userAuthRequest.password = $('#password').val();
+
+        var jsonData = JSON.stringify(userAuthRequest);
+
+        $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            url: url,
+            data: jsonData,
+            async: false,
+            success: function (data) {
+                console.log(data);
+                setCookie('username', data.userName, 120)
+                setCookie('isAuthenticated', data.isAuthenticated, 120)
+                var claims = '';
+
+                for (i = 0; i < data.claims.length; i++) {
+                    claims += (data.claims[i].claimType) + '|';
+                }
+                setCookie('claims', claims, 120);
+
+                localStorage.securityObject = JSON.stringify(data);
+                localStorage.userName = data.userName;
+                localStorage.bearerToken = data.bearerToken;
+                localStorage.firstName = data.firstName;
+                location.href = "/Index";                      
+            },
+            error: function (result) {
+                $('#message').text(JSON.parse(result.responseText)).show();
+            }
+        });
+    }
+
+</script>

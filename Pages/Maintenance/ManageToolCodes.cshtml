@@ -1,0 +1,194 @@
+﻿@page
+@model ManageToolCodesModel
+@{
+}
+
+<div class="container" style="width:100%">
+    <div class="row mb-3" id="rowValues" style="display:none">
+        <div class="col-sm-10">
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            Code
+                        </th>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Active
+                        </th>
+                        <th>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="rowCurrentValues"></tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div id="searchResultPager" style="display: none;">
+        </div>
+    </div>
+    <div class="row" id="rowAction" style="display:none">
+        <div class="col-sm-2">
+            <button class="btn btn-primary" type="button" id="btnSave">Save Codes</button>
+        </div>
+        <div class="col-sm-1">
+            <button class="btn btn-primary" type="button" id="btnAddValues">Add Codes</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="alert mt-3" id="lblMessage" style="display:none">
+        </div>
+    </div>
+</div>
+
+<!-- Add Values Modal -->
+<div class="modal" id="addModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h6 class="modal-title">Add Values</h6>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Code
+                                        </th>
+                                        <th>
+                                            Name
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input id="value1" class="form-control input-xs newvalue" /></td>
+                                        <td><input id="text1" class="form-control input-xs newtext" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input id="value2" class="form-control input-xs newvalue" /></td>
+                                        <td><input id="text2" class="form-control input-xs newtext" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input id="value3" class="form-control input-xs newvalue" /></td>
+                                        <td><input id="text3" class="form-control input-xs newtext" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input id="value4" class="form-control input-xs newvalue" /></td>
+                                        <td><input id="text4" class="form-control input-xs newtext" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input id="value5" class="form-control input-xs newvalue" /></td>
+                                        <td><input id="text5" class="form-control input-xs newtext" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input id="value6" class="form-control input-xs newvalue" /></td>
+                                        <td><input id="text6" class="form-control input-xs newtext" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input id="value7" class="form-control input-xs newvalue" /></td>
+                                        <td><input id="text7" class="form-control input-xs newtext" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input id="value8" class="form-control input-xs newvalue" /></td>
+                                        <td><input id="text8" class="form-control input-xs newtext" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input id="value9" class="form-control input-xs newvalue" /></td>
+                                        <td><input id="text9" class="form-control input-xs newtext" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input id="value10" class="form-control input-xs newvalue" /></td>
+                                        <td><input id="text10" class="form-control input-xs newtext" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input id="value11" class="form-control input-xs newvalue" /></td>
+                                        <td><input id="text11" class="form-control input-xs newtext" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input id="value12" class="form-control input-xs newvalue" /></td>
+                                        <td><input id="text12" class="form-control input-xs newtext" /></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnSaveAdd">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+            <div class="modal-footer">
+                <div class="alert" id="lblModalMessage" style="display:none">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Select Columns Modal -->
+<div class="modal" id="parmsModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h6 class="modal-title">Select Parameters</h6>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row mb-3">
+                        Please select the columns you want to display
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <ul id="divColumns1" style='list-style: none; padding-left: 0; margin-left: -10px;'></ul>
+                            <ul>
+                                <li style='list-style: none;'>
+
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="divColumns2">&nbsp;</label>
+                            <ul id="divColumns2" style='list-style: none;'></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnSaveParms">Save</button>
+                <button type="button" class="btn btn-primary" id="btnCopy">Copy to &gt;</button>
+                <select id="toolCodeCopy" class="form-control" style="width:200px"></select>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+            <div class="modal-footer">
+                <div class="alert" id="lblParmsMessage" style="display:none">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="~/js/managetoolcodes.js">
+
+    </script>
